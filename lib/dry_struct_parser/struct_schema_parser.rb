@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 module DryStructParser
   class StructSchemaParser
     PREDICATE_TYPES = {
-      String: 'string',
-      Integer: 'integer',
-      TrueClass: 'boolean',
-      FalseClass: 'boolean',
-      Float: 'float',
-      Date: 'date',
-      DateTime: 'datetime',
-      Time: 'time'
+      String: "string",
+      Integer: "integer",
+      TrueClass: "boolean",
+      FalseClass: "boolean",
+      Float: "float",
+      Date: "date",
+      DateTime: "datetime",
+      Time: "time"
     }.freeze
 
     attr_reader :keys
@@ -42,25 +44,23 @@ module DryStructParser
       required = opts.fetch(:required, true)
       nullable = opts.fetch(:nullable, false)
       node[0].each { |child| target.visit(child) }
-
       return unless key
 
-      target_info =  target.to_h if opts[:member]
-
-      type = opts[:array] ? 'array' : 'hash'
-
+      target_info = target.to_h if opts[:member]
+      type = opts[:array] ? "array" : "hash"
       definition = {
         type: type,
         required: required,
         nullable: nullable,
         **target_info
       }
-
       if opts[:oneOf]
-        keys[key] = keys[key] ? keys[key] << definition : [definition]
+        keys[key] ? keys[key] << definition : keys[key] = [definition]
       else
         keys[key] = definition
       end
+
+      keys[key]
     end
 
     def visit_key(node, opts = {})
@@ -71,7 +71,7 @@ module DryStructParser
     end
 
     def visit_constrained(node, opts = {})
-      node.each {|it| visit(it, opts) }
+      node.each { |it| visit(it, opts) }
     end
 
     def visit_nominal(_node, _opts); end
@@ -79,7 +79,6 @@ module DryStructParser
     def visit_predicate(node, opts = {})
       name, rest = node
       type = rest[0][1]
-
       if name.equal?(:type?)
         type = type.to_s.to_sym
         return unless PREDICATE_TYPES[type]
@@ -89,9 +88,7 @@ module DryStructParser
           required: opts.fetch(:required),
           nullable: opts.fetch(:nullable, false)
         }
-
         type_definition[:array] = opts[:array] if opts[:array]
-
         keys[opts[:key]] = type_definition
       elsif name.equal?(:included_in?)
         type += [nil] if opts.fetch(:nullable, false)
@@ -101,7 +98,6 @@ module DryStructParser
 
     def visit_and(node, opts = {})
       left, right = node
-
       visit(left, opts)
       visit(right, opts)
     end
@@ -122,7 +118,6 @@ module DryStructParser
 
     def visit_struct(node, opts = {})
       opts[:member] = true
-
       visit(node[1], opts)
     end
 
