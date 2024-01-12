@@ -1,6 +1,7 @@
-# frozen_string_literal: true
 
 require "dry_struct_parser"
+require "dry-struct"
+require "dry_struct_parser/types"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
