@@ -18,7 +18,7 @@ And then execute:
 ## Usage
 
 #### Parsing a Dry::Struct
-Lets say we have the following Dry::Validation::Contract definition:
+Lets say we have the following Dry::Struct definition:
 
     class DTO1 < Dry::Struct
         attribute :dto1_field, Types::String
