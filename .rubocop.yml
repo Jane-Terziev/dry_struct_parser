@@ -2,6 +2,7 @@ AllCops:
   TargetRubyVersion: 2.6
   Exclude:
     - 'spec/**/*.rb'
+    - 'vendor/'
 
 Style/StringLiterals:
   Enabled: true
