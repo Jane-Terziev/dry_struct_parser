@@ -8,7 +8,7 @@ module DryStructParser
       TrueClass: "boolean",
       FalseClass: "boolean",
       Float: "float",
-      Decimal: "decimal",
+      BigDecimal: "decimal",
       Date: "date",
       DateTime: "datetime",
       Time: "time"
