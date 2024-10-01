@@ -13,6 +13,7 @@ RSpec.describe DryStructParser::StructSchemaParser do
       DryStructParser::Types::Nominal::Date
       DryStructParser::Types::Nominal::DateTime
       DryStructParser::Types::Nominal::Time
+      DryStructParser::Types::Nominal::Any
     ],
     'Strict types': %w[
       DryStructParser::Types::Strict::Bool

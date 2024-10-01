@@ -117,6 +117,10 @@ module DryStructParser
       end
     end
 
+    def visit_any(_, opts)
+      keys[opts[:key]] = { type: :any, required: opts.fetch(:required), nullable: opts.fetch(:nullable, false) }
+    end
+
     def visit_struct(node, opts = {})
       opts[:member] = true
       visit(node[1], opts)
